@@ -12,13 +12,13 @@ View-AWSPriceList.ps1 | jsonファイルの表示
 
 スクリプトを実行すると
 
-![](image\step001.png)
+![](image/step001.png)
 
 AWSPriceListでサポートされているサービスの一覧が出力される。
 
 ついで、選択条件入力画面が表示されるので欲しいファイルの条件を入力する。
 
-![](image\step002.png)
+![](image/step002.png)
 
 デフォルト値が設定されるので、特に入力が無い時は。
 
