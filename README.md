@@ -1,12 +1,15 @@
-# AWSPriceListAPIをPowreShellからさわってみる
+# 🔰AWSPriceListAPIをPowreShellからさわってみる
 
-AWSPriceListがリージョン毎取得出来るようになったようなのでPowreshellでAPIを叩いてリージョン毎のPriceListを取得してみたり表示してみたりするスクリプトを作成してみたのとAWSpriceListAPIって何者かを紹介してみる。
+AWSPriceListAPIって何者かを紹介。
+またPowershellからAPIをさわってみる。
 
-## そもそもAWSPriceListAPIってどんなもの？
+リージョン毎のPriceListを取得してみたり表示してみたりするスクリプトを作成してみたのでその紹介。
+
+## 🔰そもそもAWSPriceListAPIってどんなもの？
 
 AWSの各サービスの料金表を取得できるAPI。
 
-元々はサービスの全リージョンデータのみ取得というなかなかハードな仕様だったが。
+元々はAWSサービスの全リージョンデータのみ取得というなかなかハードな仕様だったが。
 ある時からサービスのリージョン毎の価格が取得できるように変更された。
 
 [AWS Price List API Update – Regional Price Lists](https://aws.amazon.com/jp/blogs/aws/aws-price-list-api-update-regional-price-lists/)
@@ -15,11 +18,11 @@ AWSの各サービスの料金表を取得できるAPI。
 
 `https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/index.json`
 
-2017年12月現在は、更に細かい単位でデータが抽出出来るようになっているが、本資料では説明しない。
+2017年12月現在は、更に細かい単位でデータが抽出出来るような機能が提供されているが、本資料では説明しない。
 
 [AWS 料金表 API の更新 – 新しいクエリとメタデータ関数](https://aws.amazon.com/jp/blogs/news/aws-price-list-api-update-new-query-and-metadata-functions/?sc_channel=sm&sc_campaign=AWS_Blog&sc_publisher=FACEBOOK&sc_country=Japan&sc_geo=JAPAN&sc_outcome=awareness&trk=_FACEBOOK&sc_content=AWS)
 
-## AWSPriceListAPIで価格が取得出来るサービスの一覧を取得する
+## 🔰AWSPriceListAPIで価格が取得出来るサービスの一覧を取得する
 
 AWSPriceListAPIでは利用出来るサービスの一覧が下記URLにアクセスするとjson形式で取得できる。
 
@@ -55,16 +58,18 @@ versionIndexUrl       | AmazonEC2のPriceListのバージョン情報が格納�
 currentVersionUrl     | AmazonEC2の全リージョン版価格ファイル(json)のURLが記載
 currentRegionIndexUrl | AmazonEC2の各リージョン版価格ファイルへの情報が記載されたIndexファイル(json)のURLが記載
 
-### offerCode
+記載されているURLの前方にベースとなるurl`https://pricing.us-east-1.amazonaws.com/`を付与すれば各ファイルへアクセスすることができる。
+
+### 🔰offerCode
 
 offerCodeはそのままの意味でサービスの名称。
 
-### versionIndexUrl
+### 🔰versionIndexUrl
 
 ▶versionIndexUrlはいつ時点の価格情報か記載されているIndexファイルへのurlが記載されている。  
 ![](image/versionIndexUrl.png)
 
-### currentVersionUrl
+### 🔰currentVersionUrl
 
 ▶currentVersionUrlは各サービス(この場合はAmazonEC2)の全リージョンの価格データが記載されているjsonファイルへのURL。
 ちなみに2017年12月現在、AmazonEC2の全リージョン版価格jsonファイルは173MByteあるようです……なかなかのサイズ。ちなみに拡張子をjsonからcsvに変更するとcsv版の全リージョン価格ファイルが取得できます。
@@ -79,7 +84,7 @@ Invoke-WebRequest https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/Amazon
 Invoke-WebRequest https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/index.csv -OutFile c:\temp\ec2.csv
 ```
 
-### currentRegionIndexUrl
+### 🔰currentRegionIndexUrl
 
 リージョン毎に価格ファイルが取得出来るようになった際に追加された項目。
 各リージョンの価格ファイルへのurlが記載されたindexファイルになっている。
@@ -110,7 +115,7 @@ Invoke-WebRequest https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/Amazon
 Invoke-WebRequest https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/20171128215034/ap-northeast-1/index.csv -OutFile c:\temp\apn1-ec2.csv
 ```
 
-## 作成したスクリプトファイルの説明
+## 🔰作成したスクリプトファイルの説明
 
 今回、下記のようなスクリプトを作成してみた。
 
@@ -119,7 +124,7 @@ scriptFile               | 説明
 Get-AWSPriceList.ps1     | 価格リストファイルのダウンロードスクリプト
 Out-AWSPriceListView.ps1 | 価格リストファイル(json)のproductとtermsを紐付けて表示する。
 
-## Get-AWSPriceList.ps1
+## 🔰Get-AWSPriceList.ps1
 
 ▶Get-AWSPriceList.ps1を実行  
 ![](image/step001.png)
@@ -143,7 +148,7 @@ Out-AWSPriceListView.ps1 | 価格リストファイル(json)のproductとterms�
 
 ファイル名はサービス名.リージョン名.刊行日.拡張子。
 
-## View-AWSPriceList.ps1
+## 🔰View-AWSPriceList.ps1
 
 AmazonEC2とAmazonS3のjsonファイルの情報を表示出来ることを目標に作成してみました。
 
